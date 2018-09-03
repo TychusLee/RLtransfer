@@ -12,8 +12,8 @@ def run():
             while True:
                 action = q_learning.choose_action(str(agent_pos))
                 next_state,next_share,reward,done = map.step(action)
-                q_learning.learning(str(agent_pos),action,reward,next_state)
-                share_learning.learning(str(agent_pos),action,reward,next_share)
+                q_learning.learning(str(agent_pos),action,reward,str(next_state))
+                share_learning.learning(str(agent_pos),action,reward,str(next_share))
                 agent_pos = next_state
                 if done:
                     break
