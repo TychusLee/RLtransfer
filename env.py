@@ -162,6 +162,12 @@ class Map(tk.Tk, object):
                 self.canvas.move(self.agent,UNIT,0)
                 
         ns = self.canvas.coords(self.agent)
+        sig = []
+        x1,y1 = (ns[0]-5)/UNIT,(ns[1]-5)/UNIT
+        for beacon in self.beacon_list:
+            b_coor = self.canvas.coords(beacon)
+            x2,y2 = (b_coor[0]-10)/UNIT,(b_coor[1]-10)/UNIT
+            sig.append((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))
         if ns == self.canvas.coords(self.tar):
             reward = 1
             done = True
@@ -171,16 +177,12 @@ class Map(tk.Tk, object):
             done = True
             ns = 'terminal'
         else:
+            ns=[int(x1),int(y1)]
             reward = 0
             done = False
 
         #calculate beacon state
-        sig = []
-        x1,y1 = (ns[0]-5)/UNIT,(ns[1]-5)/UNIT
-        for beacon in self.beacon_list:
-            b_coor = self.canvas.coords(beacon)
-            x2,y2 = (b_coor[0]-5)/UNIT,(b_coor[1]-5)/UNIT
-            sig.append((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))
+        
         self.render()
         return ns,sig,reward,done
 
