@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class QLearning_Table:
-    def __init__(self, actions, learning_rate=0.9, reward_decay=0.9, e_greedy=0.7):
+    def __init__(self, actions, learning_rate=0.1, reward_decay=0.9, e_greedy=0.9):
         self.actions = actions
         self.learning_rate = learning_rate
         self.reward_decay = reward_decay
@@ -25,7 +25,7 @@ class QLearning_Table:
         print(self.qtable.loc[s, :])
         self.check_state(ns)
         q_pre = self.qtable.loc[s, a]
-        if ns != 'terminal':
+        if ns != 'target' and ns != 'obstacle':
             q_target = r + self.reward_decay * self.qtable.loc[ns, :].max()
         else:
             q_target = r
@@ -46,7 +46,7 @@ class QLearning_Table:
 
 
 class ShareTable:
-    def __init__(self, actions, learning_rate=0.9, reward_decay=0.9):
+    def __init__(self, actions, learning_rate=0.1, reward_decay=0.9):
         self.actions = actions
         self.learning_rate = learning_rate
         self.reward_decay = reward_decay
@@ -66,7 +66,7 @@ class ShareTable:
         self.check_state(ns)
         self.check_state(s)
         q_pre = self.qtable.loc[s, a]
-        if ns != 'terminal':
+        if ns != 'target' and ns != 'obstacle':
             q_target = r + self.reward_decay * self.qtable.loc[ns, :].max()
         else:
             q_target = r

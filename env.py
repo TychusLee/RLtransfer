@@ -6,12 +6,12 @@ import random
 import itertools
 
 UNIT = 40
-MAP_H = 20
-MAP_W = 20
+MAP_H = 10
+MAP_W = 10
 MAP_HU = MAP_H * UNIT
 MAP_WU = MAP_W * UNIT
-OBS_MAXN = 35
-OBS_MINN = 25
+OBS_MAXN = 25
+OBS_MINN = 15
 BEA_NUM = 3
 
 
@@ -170,11 +170,11 @@ class Map(tk.Tk, object):
         if ns == self.canvas.coords(self.tar):
             reward = 1
             done = True
-            ns = 'terminal'
+            ns = 'target'
         elif ns in [self.canvas.coords(i) for i in self.obs_list]:
             reward = -1
             done = True
-            ns = 'terminal'
+            ns = 'obstacle'
         else:
             ns = [int(x1), int(y1)]
             reward = 0
